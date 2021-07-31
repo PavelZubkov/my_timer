@@ -1,11 +1,18 @@
 namespace $ {
 
 	export class $my_timer extends $mol_object2 {
-		timer_id: any
 		
 		@ $mol_mem
-		time( next? : Date ) {
-			return next ?? new Date
+		enabled( next? : boolean ) {
+			return next ?? false
+		}
+		
+		@ $mol_mem
+		time() {
+			if ( this.enabled() ) {
+				return new Date( $mol_state_time.now( this.period() ) )
+			}
+			return new Date()
 		}
 		
 		@ $mol_mem
@@ -14,17 +21,13 @@ namespace $ {
 		}
 		
 		start() {
-			this.loop()
+			this.enabled( true )
 		}
 		
 		stop() {
-			clearTimeout( this.timer_id )
+			this.enabled( false )
 		}
 		
-		loop() {
-			this.time( new Date() )
-			this.timer_id = setTimeout( () => this.loop() , this.period() )
-		}
 	}
 	
 	export class $my_timer_app extends $mol_object2 {
