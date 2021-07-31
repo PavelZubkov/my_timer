@@ -35,10 +35,9 @@ namespace $ {
 
 		@ $mol_mem
 		static autorun() {
-			const timer = this.timer()
 			return $mol_atom2_autorun( ()=> {
 				console.log('RENDER')
-				return document.getElementById('root')!.innerHTML = timer.time().toISOString()
+				return document.getElementById('root')!.innerHTML = this.timer().time().toISOString()
 			} )
 		}
 	}
